@@ -1,0 +1,55 @@
+5 5 * * * cd m ; sh /home/kuroneko/m/start.sh
+
+#!/bin/bash
+screen -UAmdS minecraft java -Xms4G -Xmx4G -jar /home/kuroneko/m/server.jar nogui
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+1 5 * * * sh /home/kuroneko/m/removebackup.sh
+
+#!/bin/bash
+rm -r /home/kuroneko/backup/world-`date +%Y%m%d%H%M -d '15 days ago'`
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+autobackup.sh
+
+#!/bin/sh
+mkdir /home/kuroneko/backup/chitsuoworld-`date +%Y%m%d%H%M`
+cp -r /home/kuroneko/m1/aaa/chitsuoworld /home/kuroneko/backup/chitsuoworld-`date +%Y%m%d%H%M`
+
+
+==========
+#!/bin/sh
+
+tar zcvf /home/kuroneko/backup/world-`date +%Y%m%d%H%M` /home/kuroneko/m/world
+==========
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+0 5 * * * sh /home/kuroneko/m/restart.sh
+
+#!/bin/bash
+
+# === 設定 ===
+# サーバ終了までの待ち時間
+WAIT=60
+# screenの名前
+SCREEN_NAME='minecraft'
+# ============
+
+screen -p 0 -S ${SCREEN_NAME} -X eval 'stuff "say '${WAIT}'秒後にサーバーを再起動します\015"'
+screen -p 0 -S ${SCREEN_NAME} -X eval 'stuff "say すぐに再接続可能になるので、しばらくお待ち下さい\015"'
+
+sleep $WAIT
+screen -p 0 -S ${SCREEN_NAME} -X eval 'stuff "stop\015"'
+# バックアップなどを停止中に行いたい場合はこの中に記載 ->
+
+sh /home/kuroneko/backup/autobackup.sh
+
+# <- バックアップなどを停止中に行いたい場合はこの中に記載
+
+# screen -listの結果から${SCREEN_NAME}が含まれるものを抽出し、空になるまでループ(結果、全て終了するまで待つ事になる)
+while [ -n "$(screen -list | grep -o "${SCREEN_NAME}")" ]
+do
+  # 空回り防止
+  sleep 1
+done
